@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Tech Company Sign-in</title>
+<style>
+
+body {
+  background-color: #f2f2f2;
+  font-family: 'Roboto', sans-serif;
+}
+
+.container {
+  width: 400px;
+  margin: 0 auto;
+  padding-top: 25px;
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+.form-group {
+  margin: 15px 0;
+}
+
+.input-group {
+  margin-bottom: 15px;
+  padding: 10px 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.form-control {
+  background: #f7f7f7;
+  border: 0;
+  width: 80%;
+  padding: 10px;
+  font-size: 0.9em;
+  letter-spacing: 1px;
+}
+
+.btn {
+  background: #4CAF50;
+  color: #fff;
+  letter-spacing: 1px;
+  padding: 10px 20px;
+  font-size: 1em;
+  border: 0;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+</style>
+</head>
+<body>
+  <div class="container">
+    <form action="{{ url_for('signin') }}" method="POST">
+      <div class="form-group">
+        <div class="input-group">
+          <input type="text" name="username" placeholder="Username" class="form-control" required autofocus>
+        </div>
+        <div class="input-group">
+          <input type="password" name="password" placeholder="Password" class="form-control" required>
+        </div>
+        <div class="input-group">
+          <input type="submit" value="Sign In" class="btn">
+        </div>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

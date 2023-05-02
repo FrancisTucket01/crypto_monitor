@@ -1,0 +1,417 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title> XYZ Company </title>
+    
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+    <style>
+    * {
+        margin: 0px;
+    }
+    ul {
+        list-style-type: none;
+        height: 50px;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #333;
+    }
+    .logo a{
+        font-size: 1.7rem;
+        color:yellowgreen;
+        padding-right: 2.4rem;
+    }
+
+    li {
+        float: left;
+    }
+
+    li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 1.3rem;
+    }
+
+    li a:hover {
+        background-color: #111;
+        color:yellowgreen;
+        border-radius: 0.4rem;
+    }
+
+    .dropdown{
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: fixed;
+        top: 40px;
+        height: 180px;
+        background-color: #be111100;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 987 !important;
+        border-bottom-left-radius: 0.7rem;
+        border-bottom-right-radius: 0.7rem;
+    }
+
+    .subdropdown-content{
+        display: flex;
+        height: 180px;
+        flex-direction: column;
+        background-color:rgb(36, 36, 36);
+        border-bottom-left-radius: 0.7rem;
+        border-bottom-right-radius: 0.7rem;
+    }
+
+    .subdropdown-content li{
+        padding: 0.7rem;
+        font-size: 1.3rem;
+        color:whitesmoke;
+    }
+
+    .subdropdown-content li:hover{
+        color: yellowgreen;
+        cursor: pointer;
+        font-size: 1.2rem;
+    }
+    .services{
+        background-color: antiquewhite;
+        display: flex;
+        flex-direction: column;
+        height: auto;
+    }
+
+    .dropdown:hover .dropdown-content{
+        display: block;
+    }
+    .lefter{
+        float: right;
+        display: flex;
+        flex-direction: row;
+        margin-right: 1.3rem;
+    }
+    
+    .homepage-container {
+    max-width: 800px;
+    margin: 0 auto;
+    font-family: sans-serif;
+    padding: 20px;
+}
+
+.homepage-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.homepage-main-content {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.homepage-intro {
+    flex: 0 0 100%;
+    padding: 20px;
+    text-align: center;
+    background: #f8f8f8;
+}
+
+.homepage-services {
+    flex: 0 0 50%;
+    padding: 20px;
+    background: #f8f8f8;
+}
+
+.homepage-portfolio {
+    flex: 0 0 50%;
+    padding: 20px;
+    background: #f8f8f8;
+}
+
+.homepage-contact {
+    flex: 0 0 100%;
+    padding: 20px;
+    background: #f8f8f8;
+    text-align: center;
+}
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ff3300;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+    footer {
+    padding: 25px 0;
+    background-color: #333;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.footer-links {
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.footer-links li {
+    display: inline-block;
+}
+
+.footer-links li:not(:last-child) {
+    margin-right: 5px;
+}
+
+.footer-links li a {
+    color: #fff;
+    font-weight: 500;
+}
+
+.address {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+
+.contact {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+
+.social {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.social ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.social ul li {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.social ul li a {
+    color: #fff;
+    font-size: 16px;
+    transition: all 0.3s;
+}
+
+.social ul li a:hover {
+    color: #18d26e;
+}
+.client_responses {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    font-family: 'Roboto', sans-serif;
+}
+
+.response {
+    width: 300px;
+    padding: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    margin: 10px;
+    background-color: #fff;
+    text-align: center;
+}
+
+.response:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    transform: scale(1.1);
+}
+
+.response h3 {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.response p {
+    font-size: 16px;
+    padding: 10px 0;
+}
+    </style>
+</head>
+<body>
+<div>
+    <ul>
+        <li class="logo"><a href="xyz">Quantum-Tech</a></li>
+        <li><a href="xyz">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+        <li class="dropdown"><a href="#">Services</a>
+            <div class="dropdown-content">
+                <ul class="subdropdown-content">
+                    <li>Service One here</li>
+                    <li>Service One here</li>
+                    <li>Service One here</li>
+                    <li>Service One here</li>
+                </ul>
+            </div>
+        </li>
+        <ul class="lefter">
+            <li><a href="/xyz-signin">Signin</a></li>
+            <li><a href="xyz-signup">signup</a></li>
+        </ul>
+    </ul>
+</div>
+            <div class="chart" id="chart">
+                <div id="chartContainer" style="height: 500px; width: 100%;"></div>
+            </div>
+<div class="homepage-container">
+    <header class="homepage-header">
+        <h1>Welcome to Our Tech Company!</h1>
+    </header>
+    <div class="homepage-main-content">
+        <div class="homepage-intro">
+            <h2>We are a tech company that focuses on the development of innovative solutions for our clients.</h2>
+            <p>Our mission is to create technology that makes the world a better place. We strive to provide our customers with the highest level of quality and service. We are committed to helping you achieve your technology goals and make the most of your time and resources.</p>
+        </div>
+        <div class="homepage-services">
+            <h3>Our Services</h3>
+            <ul class="services">
+                <li>Software Development</li>
+                <li>Web Design and Development</li>
+                <li>Mobile App Development</li>
+                <li>Data Science and Analytics</li>
+                <li>Cloud Solutions</li>
+                <li>Managed Services</li>
+            </ul>
+        </div>
+        <div class="homepage-portfolio">
+            <h3>Our Portfolio</h3>
+            <p>Our portfolio showcases the projects we’ve worked on and the results we’ve achieved for our clients. From mobile apps and web sites to cloud solutions and data science projects, our portfolio is a testament to our commitment to providing the best technology solutions.</p>
+            <a class="button" href="#">View Our Portfolio</a>
+        </div>
+        <div class="homepage-contact">
+            <h3>Contact Us</h3>
+            <p>If you’d like to learn more about how we can help you achieve your technology goals, please don’t hesitate to contact us.</p>
+            <a class="button" href="#">Contact Us Today</a>
+        </div>
+    </div>
+</div>
+
+<h1>Welcome to XYZ Company</h1>
+            
+<p>XYZ Company provides a variety of services and solutions for businesses and individuals. We specialize in web design, software development, and consulting services.</p>
+
+<div class="client_responses">
+    <div class="response">
+        <h3>Client 1</h3>
+        <p>XYZ Company did a great job on developing our website. They were very professional and worked quickly and efficiently.</p>
+    </div>
+    <div class="response">
+        <h3>Client 2</h3>
+        <p>The software development team at XYZ Company was very helpful in getting our project done quickly and efficiently.</p>
+    </div>
+    <div class="response">
+        <h3>Client 3</h3>
+        <p>The consulting services provided by XYZ Company have been invaluable in helping us develop our business strategy.</p>
+    </div>
+    <div class="response">
+        <h3>Client 4</h3>
+        <p>We are very happy with the website created by XYZ Company. They did an excellent job and we would highly recommend them.</p>
+    </div>
+    <div class="response">
+        <h3>Client 5</h3>
+        <p>XYZ Company provided us with an excellent software solution that met our needs perfectly.</p>
+    </div>
+    <div class="response">
+        <h3>Client 6</h3>
+        <p>The team at XYZ Company provided us with great advice and guidance that helped us make the right decisions.</p>
+    </div>
+    <div class="response">
+        <h3>Client 7</h3>
+        <p>The web design services provided by XYZ Company were excellent. They were very knowledgeable and helped us create a beautiful website.</p>
+    </div>
+</div>
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="address">
+                    <h4>Our Address</h4>
+                    <h6>XYZ Company, Inc.</h6>
+                    <h6>123 Main Street</h6>
+                    <h6>City, State Zip</h6>
+                    <h6>USA</h6>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="contact">
+                    <h4>Contact Us</h4>
+                    <h6>Phone: 123-456-7890</h6>
+                    <h6>Email: info@xyzcompany.com</h6>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="social">
+                    <h4>Social</h4>
+                    <ul>
+                        <li><a href="https://twitter.com/xyzcompany" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="https://www.facebook.com/xyzcompany" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="https://www.instagram.com/xyzcompany" target="_blank"><i class="fa fa-instagram"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+    <script type="text/javascript">
+    var dataPoints = [];
+    var chart = new CanvasJS.Chart("chartContainer",{
+        title:{
+            text:"Rendering Chart with dataPoints from External JSON"
+        },
+        backgroundColor: "#c0f7b73a;",
+        data: [{
+            type: "line",
+            dataPoints : dataPoints,
+        }]
+    });
+
+
+    $.getJSON("https://hot-areas-smile-35-196-98-147.loca.lt/chartdata", function(data) {
+        for(var i = 0; i < data.length; i++) {
+            const today = new Date(data[i].date)
+            const yyyy = today.getFullYear();
+            let mm = today.getMonth() + 1; // Months start at 0!
+            let dd = today.getDate();
+
+            if (dd < 10) dd = '0' + dd;
+            if (mm < 10) mm = '0' + mm;
+
+            const formattedToday = dd + '/' + mm + '/' + yyyy;
+            dataPoints.push({ label: formattedToday, y: data[i].price });
+            //dataPoints.push({ label: data[i].label, y: data[i].price });            
+        }
+        console.log(dataPoints)
+        chart.render();
+    });
+
+
+</script>
+</head>
+<body>
+<div id="chartContainer" style="height: 300px; width: 100%;"></div>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+</body>
+
+</html>

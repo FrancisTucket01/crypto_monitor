@@ -1,0 +1,237 @@
+{% extends "index.html" %}
+
+
+{% block title %} Dashboard {% endblock %}
+
+
+{% block content %}
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class="flasher" id="flasher">
+    {% for message in messages %}
+      <li><div class="messy">{{ message }}</div><a href="#" onclick="this.parentElement.style.display='none'"><div class="closinga"></div><div class="closingb"></div></a></li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+<div class="notification center-elements" id="popup">
+    <div class="message">
+    </div>
+</div>
+<div class="side-nav", id="side">
+    
+    {% for data in database %}
+        	{% if data == "news" %}
+                <a href="/?db={{ data }}"> ALL </a> 
+            {% else %}
+               <a href="/?db={{ data }}"> {{ data }} </a> 
+            {% endif %}
+    {% endfor %}
+    <a href="/?db=news&latest=True"> Latest </a> 
+
+</div>
+
+<div class="container-wrapper">
+        {% if error != "None" %}
+            <div class="chart" id="chart">
+                <a class = "chart-btn-prev"><i class="fa fa-arrow-left-long" aria-hidden="true"></i></a>
+                <a class = "chart-btn-next"><i class="fa fa-arrow-right-long" aria-hidden="true"></i></a>
+                <div id="chartContainer" class="chartContainer" style="height: 500px; width: 100%;"></div>
+            </div>
+        {% endif %}
+    {% if latest == 'True' and db == "news" %}
+        <div class="hed" id="hed"><h1>Latest News</h1></div>
+    {% elif db == "news" %}
+        <div class="hed" id="hed"><h1>Showing All News</h1></div>
+    {% else %}
+        <div class="hed" id="hed"><h1>{{ db }} News</h1></div>
+    {% endif %}
+    <div class="news" id="newsli">
+        <p>{{ mess }}</p>
+        {% if data != () %}
+            {% if latest == True %}
+                {% for row in data %}
+                    {% if "minutes" in row[1] %}
+                        <a href="{{ row[3] }}">
+                            <li >
+                                <div class="news-date">{{ row[1] }}</div><div class="news-info">{{ row[2] }}</div>
+                            </li>
+                        </a>
+                    {% endif %}
+                {%  endfor %}
+            {% elif latest == False %}
+                {% for row in data %}
+                    <a href="{{ row[3] }}">
+                        <li >
+                            <div class="news-date">{{ row[1] }}</div><div class="news-info">{{ row[2] }}</div>
+                        </li>
+                    </a>
+                {%  endfor %}
+            {% endif %}
+        {% else %}
+            <li style="display:flex;justify-content: center;align-items: center;color:var(--col-btn);"><strong>ERROR 1224 : No Data To Be Displayed!!!</strong></li>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+
+    function closeflasher(){
+        const outing = document.getElementById("flasher");
+        outing.style.display = "none";
+        console.log("Done");
+        }
+
+    const popup = document.getElementById("popup").style.display
+    const scroler = document.getElementById("scrol")
+    function pos(){
+        const footer = document.getElementById("footer").getBoundingClientRect().y
+        const win = window.innerHeight
+
+        if (footer <= win){
+            const x = win - footer - 42
+            document.getElementById("side").style.top = `${-x}px`
+        }
+        else{
+            document.getElementById("side").style.top = "48px"
+        }
+    }
+    function notify() {
+        if (popup == "none"){
+            document.getElementById("popup").style.display = "grid";
+        }
+    }
+    scroler.addEventListener("click", () =>{
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+        
+    })
+    const scro = document.getElementById("scro")
+    window.addEventListener("scroll",() =>{
+        const top = window.scrollY
+        if(top >= 400){
+            scro.classList.add("visible");
+
+        }
+        if (top < 400 ){
+            scro.classList.remove("visible");
+        }
+    })
+    
+    const theme = document.getElementById("theme");
+    const wrapper = document.getElementById("wrapper");
+    const newsli = document.getElementById("newsli");
+    const lists = document.getElementsByClassName("lists");
+    const them = sessionStorage.getItem("theme");
+    const hed = document.getElementById("hed");
+    const mychart = document.getElementById("chart");
+    const themeText = document.getElementById("theme-text");
+    
+    function themeToggle(){
+        wrapper.classList.toggle("dark");
+        hed.classList.toggle("dark");
+        //newsli.classList.toggle("dark");
+        mychart.classList.toggle("dark");
+        for (i=0; i<lists.length; i++){
+            lists[i].classList.toggle("dark");
+        }
+        if (document.getElementById("theme-text").innerHTML == 'Light Theme'){
+            document.getElementById("theme-text").innerHTML = 'Dark Theme';
+        }
+        else{
+            document.getElementById("theme-text").innerHTML = "Light Theme"
+        }
+        if ( them == "dark"){
+            sessionStorage.setItem("theme", "light");
+        }else if(them == "light"){
+            sessionStorage.setItem("theme", "dark");
+        }
+        else{
+            sessionStorage.setItem("theme", "light");
+        }
+    }
+    function changeTheme(){
+        wrapper.classList.toggle(them);
+        hed.classList.toggle(them)
+        mychart.classList.toggle(them)
+        if (them == 'dark'){
+            document.getElementById("theme-text").innerText = "Light Theme"
+        }
+        else{
+            document.getElementById("theme-text").innerText = "Dark Theme"
+        }
+        for (i=0; i<lists.length; i++){
+            lists[i].classList.toggle(them);
+        }
+    }
+    
+
+    var dataPoints = [];
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    let db = urlParams.get('db');
+    let current_url = "https://cyan-mirrors-smile-34-86-111-132.loca.lt/chartdata?db="+db;
+    // check if user in dashboard and set the chart title to null
+    if (db == null){
+        db = "EURUSD";
+    }
+    // Canvas js chart
+    var chart = new CanvasJS.Chart("chartContainer",{
+        animationEnabled: true,
+        theme: "light2", // "light1", "light2", "dark1", "dark2"
+        exportEnabled: true,
+        title:{
+            text:"Forex "+db,
+            fontColor: "white",
+        },
+        subtitles: [{
+            text: "Weekly Averages",
+            fontColor: "white",
+        }],
+        axisX:{
+            titleFontColor: "white",
+            labelFontColor: "white",
+            crosshair: {
+                enabled: true
+            },
+			labelAngle: -45
+            },
+        axisY:{
+            titleFontColor: "white",
+            labelFontColor: "white",
+            crosshair: {
+                enabled: true
+            },
+            },
+        backgroundColor: "#124143",
+        zoomEnabled:true,
+        data: [{
+            type: "candlestick",
+            risingColor: "red", 
+            fallingColor: "green",
+			dataPoints: dataPoints,
+        }]
+    });
+
+    //ajax to get data from the database
+    $.getJSON(current_url, function(data) {
+        for(var i = 0; i < data.length; i++) {
+            const today = new Date(data[i].date);
+            const yyyy = today.getFullYear();
+            let mm = today.getMonth() + 1; // Months start at 0!
+            let dd = today.getDate();
+
+            if (dd < 10) dd = '0' + dd;
+            if (mm < 10) mm = '0' + mm;
+
+            const formattedToday = dd + '/' + mm + '/' + yyyy;
+            dataPoints.push({ x:new Date(data[i].date), y:[data[i].price[0], data[i].price[1], data[i].price[2], data[i].price[3]]});
+            //dataPoints.push({ label: data[i].label, y: data[i].price });            
+        }
+        chart.render();
+    });
+    
+   
+</script>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends "index.html" %}
+
+
+{% block title %} Dashboard {% endblock %}
+
+
+{% block content %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flasher" id="flasher">
+            {% for message in messages %}
+                <li><div class="messy">{{ message }}</div><div><a href="#" onclick="this.parentElement.parentElement.style.display='none'"><div class="closinga"></div><div class="closingb"></div></a></div></li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    <div class="notification center-elements" id="popup">
+        <div class="message">
+        </div>
+    </div>
+
+
+    <div class="container-wrapper-forecast">
+        {% if session['loggedin'] == True %}
+            <div class="side-contents-forecast" id="newnav">
+                <div class="logo" id="logo">
+                    <a href="/">LITW</a>
+                </div>
+                <div class="second-nav-wrapper">
+                    {% for dbs in  tables%}
+                        <a class="side-con-a" id="{{ dbs }}D" onclick="reloader('{{ dbs }}');log_clicked('{{ dbs }}D')"> {{ dbs }}</a> 
+                    {% endfor %}
+                </div>
+            </div>
+                {% if error != "None" %}
+                    <div class="chart-forecast" id="chart-forecast">
+                            <div id="chartContainer" class="chartContainer-forecast"></div>
+                            <div style="margin:20px 20px"><img src="/static/forecast.JPG" alt="forecast"></div>
+                    </div>
+                {% endif %}   
+
+                
+                <div id="loader"><i class="fa-solid fa-spinner fa-5x"></i></div>
+        {% endif %}
+            
+{% endblock %}
+
+{% block scripts %} 
+    <script type="text/javascript" src="/static/forecast.js"></script>
+    <script type="text/javascript" src="/static/crypto_dash.js"></script> 
+{% endblock %}

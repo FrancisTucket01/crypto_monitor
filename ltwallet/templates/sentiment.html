@@ -1,0 +1,72 @@
+{% extends "index.html" %}
+
+
+{% block title %} Charts {% endblock %}
+
+
+{% block content %} 
+    <div class="container-wrapper">
+        <div><div id="chartContainer" style="height: 470px; width: 100%;"></div></div>
+        
+        <div class="news">
+            <div style="display: flex;width: 100%;justify-content: space-around;">
+                <span style="font-size: large;padding-left: 2rem;">Username</span>
+                <span style="font-size: large;padding-left: 2rem;">Tweet</span>
+                <span style="font-size: large;padding-left: 2rem;">Date</span>
+                <span style="font-size: large;padding-left: 2rem;">Polarity</span>
+            </div>
+            {% for row in tweets %}
+                <li>
+                    <div class="news-date">{{ row[3] }}</div>
+                    <div class="news-info">{{ row[1] }}</div>
+                    <div class="news-date">{{ row[0] }}</div>
+                    <div class="news-date">{{ row[2] }}</div>
+                </li>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        window.onload = function () {
+
+        var chart = new CanvasJS.Chart("chartContainer", {
+            exportEnabled: true,
+            animationEnabled: true,
+            title:{
+                text: "Tweet polarity"
+            },
+            legend:{
+                cursor: "pointer",
+                itemclick: explodePie
+            },
+            data: [{
+                type: "pie",
+		        radius: 140,
+                showInLegend: true,
+                toolTipContent: "{name}: <strong>{y}%</strong>",
+                indexLabel: "{name} - {y}%",
+                dataPoints: [
+                    { y: {{ sentiment[0] }}, name: "Positive", exploded: true },
+                    { y: {{ sentiment[1] }}, name: "Negative", exploded: true },
+                    { y: {{ sentiment[2] }}, name: "Neutral", exploded: true },
+                ]
+            }]
+        });
+        chart.render();
+        }
+        
+        function explodePie (e) {
+            if(typeof (e.dataSeries.dataPoints[e.dataPointIndex].exploded) === "undefined" || !e.dataSeries.dataPoints[e.dataPointIndex].exploded) {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = true;
+            } else {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = false;
+            }
+            e.chart.render();
+        
+        }
+    </script>
+{% endblock %}
+

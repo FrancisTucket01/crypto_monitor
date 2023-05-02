@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "localtunnel": "^2.0.2",
+    "tunnel": "0.0.6",
+    "wstunnel": "^1.4.0"
+  }
+}

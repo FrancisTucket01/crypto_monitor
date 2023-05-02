@@ -1,0 +1,50 @@
+{% extends "index.html" %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+<form name="signup" method = "POST" action="/registration" style="width: 400px; height:500; {% if error %}box-shadow: 0px 0px 25px 3px red;{% endif %}">
+    {% if error %}
+        <div class="error">
+            {{ error }}
+        </div>
+    {% endif %}
+    
+    <div class="form-head center-elements">
+        <h1>LIT Wallet</h1>
+        <h2>Sign Up</h2>
+    </div>
+    <div class="form-content">
+        <label for="">First Name</label>
+        <input type="text" name=""  placeholder="First Name">
+        <label for="">Surname</label>
+        <input type="text" name=""  placeholder="Surname">
+        <label for="">Email Address</label>
+        <input type="email" name="email"  placeholder="example@example.com">
+        <label for="username">Username</label>
+        <input type="text" name="username"  placeholder="Username or Email_Address">
+        <label for="password">Password</label>
+        <input type="password" name="password" placeholder="Password">
+        <label for="">Confirm Password</label>
+        <input type="password" name="password2" placeholder="Confirm Password">
+        <p> Already have an account? <a href="{{ url_for('signin') }}"> <strong>Sign In</strong></a></p>
+        <input type="submit"  value="Sign Up">
+    </div>
+ </form>
+
+{% endblock %}
+{% block scripts %}
+    <script>
+        
+        function validate(){
+            var pass = document.forms.signup.password.value
+            var pass2 = document.forms.signup.password2.value
+            if (pass == pass2){
+                return true 
+            }
+            else{
+                return false
+            }
+        }
+    </script>
+{% endblock %}

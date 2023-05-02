@@ -1,0 +1,84 @@
+{% extends "index.html" %}
+
+
+{% block title %} Dashboard {% endblock %}
+
+
+{% block content %}
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class="flasher" id="flasher">
+    {% for message in messages %}
+      <li><div class="messy">{{ message }}</div><div><a href="#" onclick="this.parentElement.parentElement.style.display='none'"><div class="closinga"></div><div class="closingb"></div></a></div></li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+<div class="notification center-elements" id="popup">
+    <div class="message">
+    </div>
+</div>
+
+
+<div class="container-wrapper">
+    {% if session['loggedin'] == True %}
+        <div class="side-contents" id="newnav">
+            <div class="logo" id="logo">
+                <a href="/">LITW</a>
+            </div>
+            <div class="second-nav-wrapper">
+                {% for dbs in  tables%}
+                    <a class="side-con-a" id="{{ dbs }}D" onclick="reloader('{{ dbs }}');log_clicked('{{ dbs }}D')"> {{ dbs }}</a>  
+                {% endfor %}
+            </div>
+        </div>
+        
+        <div id="loader-home"><i class="fa-solid fa-spinner fa-5x"></i></div>
+        {% if error != "None" %}
+            <div class="chart" id="chart">
+                <a class = "chart-btn-prev"><i class="fa fa-arrow-left-long" aria-hidden="true"></i></a>
+                <a class = "chart-btn-next"><i class="fa fa-arrow-right-long" aria-hidden="true"></i></a>
+                <div id="chartContainer" class="chartContainer"></div>
+            </div>
+        {% endif %}
+    {% endif %}
+    {% if latest == 'True' and db == "news" %}
+        <div class="hed" id="hed"><h1>Latest News</h1></div>
+    {% elif db == "news" %}
+        <div class="hed" id="hed"><h1>Showing All News</h1></div>
+    {% else %}
+        <div class="hed" id="hed"><h1>{{ db }} News</h1></div>
+    {% endif %}
+    <div class="news" id="newsli">
+        <p>{{ mess }}</p>
+        {% if data != () %}
+            {% if latest == True %}
+                {% for row in data %}
+                    {% if "minutes" in row[1] %}
+                        <a href="{{ row[3] }}">
+                            <li >
+                                <div class="news-date">{{ row[1] }}</div><div class="news-info">{{ row[2] }}</div>
+                            </li>
+                        </a>
+                    {% endif %}
+                {%  endfor %}
+            {% elif latest == False %}
+                {% for row in data %}
+                    <a href="{{ row[3] }}">
+                        <li >
+                            <div class="news-date">{{ row[1] }}</div><div class="news-info">{{ row[2] }}</div>
+                        </li>
+                    </a>
+                {%  endfor %}
+            {% endif %}
+        {% else %}
+            <li style="display:flex;justify-content: center;align-items: center;color:var(--col-btn);"><strong>ERROR 1224 : No Data To Be Displayed!!!</strong></li>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %} 
+    <script type="text/javascript" src="/static/crypto_home.js"></script>
+    <script type="text/javascript" src="/static/crypto_dash.js"></script>
+{% endblock %}

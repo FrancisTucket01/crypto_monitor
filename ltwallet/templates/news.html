@@ -1,0 +1,36 @@
+{% extends "index.html" %}
+
+
+{% block title %} Charts {% endblock %}
+
+
+{% block content %}
+    <div class="chart-year">
+        <h5> Select Year :</h5> 
+        {% for year in years %}
+            <a href="?year={{ year }}" class="years">{{ year }}</a>
+        {% endfor %}
+    </div>
+    <div class="container-wrapper">
+        <div class="news">
+            <div style="display: flex;width: 100%;justify-content: space-around;">
+                <span style="font-size: large;padding-left: 2rem;">News</span>
+                <span style="font-size: large;padding-left: 2rem;">Time</span>
+                <span style="font-size: large;padding-left: 2rem;">Author</span>
+            </div>
+            {% for row in data %}
+                <li>
+                    <div class="news-date">{{ row[1] }}</div>
+                    <div class="news-info">{{ row[3] }}</div>
+                    <div class="news-date">{{ row[4] }}</div>
+                </li>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript" src="/static/crypto_home.js"></script>
+{% endblock %}
+
